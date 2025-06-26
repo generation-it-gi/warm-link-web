@@ -1,4 +1,5 @@
 import { Settings } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
 const chatList = [
@@ -23,6 +24,8 @@ const chatList = [
 ];
 
 export const ChatPage = () => {
+  const navigate = useNavigate();
+
   return (
     <>
       <Header>
@@ -34,7 +37,7 @@ export const ChatPage = () => {
 
       <ChatList>
         {chatList.map(chat => (
-          <ChatItem key={chat.id}>
+          <ChatItem key={chat.id} onClick={() => navigate('/chat/1')}>
             <ProfileImage src={chat.profileImage} alt={`${chat.name} 프로필`} />
             <ChatInfo>
               <ChatName>{chat.name}</ChatName>

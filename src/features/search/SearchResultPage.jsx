@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-import { useSearchParams } from 'react-router-dom';
+import { useLocation, useNavigate, useSearchParams } from 'react-router-dom';
 import styled from 'styled-components';
 
 import { SearchBar } from './SearchBar';
@@ -47,6 +47,49 @@ const dummyResults = [
   },
 ];
 
+export const SearchResultPage = () => {
+  const [searchParams] = useSearchParams();
+  const [keyword, setKeyword] = useState(searchParams.get('category') || '');
+  const [activeTab, setActiveTab] = useState('거래순');
+
+  const location = useLocation();
+
+  const newTalent = location.state?.newTalent;
+
+  const results = newTalent ? [newTalent, ...dummyResults] : dummyResults;
+
+  const tabs = ['거래순', '리뷰순', '별점순'];
+  const navigate = useNavigate();
+
+  const handleClickCard = () => {
+    navigate('/talent/1'); // 모든 카드 동일하게 이동
+  };
+  return (
+    <Container>
+      <Title>검색</Title>
+      <div style={{ margin: '0.75rem 0 0.5rem' }}>
+        <SearchBar keyword={keyword} onChange={setKeyword} />
+      </div>
+
+      <TabMenu>
+        {tabs.map(tab => (
+          <TabButton key={tab} onClick={() => setActiveTab(tab)} active={activeTab === tab}>
+            {tab}
+          </TabButton>
+        ))}
+      </TabMenu>
+
+      <ResultList>
+        {results.map((item, idx) => (
+          <div key={idx} onClick={handleClickCard} style={{ cursor: 'pointer' }}>
+            <TalentCard {...item} />
+          </div>
+        ))}
+      </ResultList>
+    </Container>
+  );
+};
+
 const Container = styled.div`
   padding: 1rem;
 `;
@@ -74,34 +117,3 @@ const ResultList = styled.div`
   flex-direction: column;
   gap: 0.75rem;
 `;
-
-export const SearchResultPage = () => {
-  const [searchParams] = useSearchParams();
-  const [keyword, setKeyword] = useState(searchParams.get('category') || '');
-  const [activeTab, setActiveTab] = useState('거래순');
-
-  const tabs = ['거래순', '리뷰순', '별점순'];
-
-  return (
-    <Container>
-      <Title>검색</Title>
-      <div style={{ margin: '0.75rem 0 0.5rem' }}>
-        <SearchBar keyword={keyword} onChange={setKeyword} />
-      </div>
-
-      <TabMenu>
-        {tabs.map(tab => (
-          <TabButton key={tab} onClick={() => setActiveTab(tab)} active={activeTab === tab}>
-            {tab}
-          </TabButton>
-        ))}
-      </TabMenu>
-
-      <ResultList>
-        {dummyResults.map((item, idx) => (
-          <TalentCard key={idx} {...item} />
-        ))}
-      </ResultList>
-    </Container>
-  );
-};

@@ -18,6 +18,47 @@ const categories = [
   { label: '기타', icon: '/images/category8.png' },
 ];
 
+export const SearchPage = () => {
+  const [keyword, setKeyword] = useState('');
+  const navigate = useNavigate();
+
+  const handleCategoryClick = category => {
+    navigate(`/search/result?category=${category}`);
+  };
+
+  return (
+    <Container>
+      <Heading>검색</Heading>
+      <div style={{ marginTop: '-1rem' }}>
+        <SearchBar keyword={keyword} onChange={setKeyword} />
+      </div>
+      <Section>
+        <SectionTitle>🔥 실시간 인기</SectionTitle>
+        <PopularList>
+          {popular.map((item, i) => (
+            <li key={i}>
+              <span style={{ fontWeight: 600, marginRight: '0.75rem' }}>{i + 1}</span>
+              {item}
+            </li>
+          ))}
+        </PopularList>
+      </Section>
+
+      <Section>
+        <SectionTitle>⭐ 카테고리</SectionTitle>
+        <CategoryGrid>
+          {categories.map(({ label, icon }) => (
+            <CategoryButton key={label} onClick={() => handleCategoryClick(label)}>
+              <CategoryIcon src={icon} alt={label} />
+              <CategoryLabel>{label}</CategoryLabel>
+            </CategoryButton>
+          ))}
+        </CategoryGrid>
+      </Section>
+    </Container>
+  );
+};
+
 const Container = styled.div`
   padding: 1rem;
   display: flex;
@@ -72,44 +113,3 @@ const CategoryLabel = styled.span`
   font-weight: 600;
   color: #01277a;
 `;
-
-export const SearchPage = () => {
-  const [keyword, setKeyword] = useState('');
-  const navigate = useNavigate();
-
-  const handleCategoryClick = category => {
-    navigate(`/search/result?category=${category}`);
-  };
-
-  return (
-    <Container>
-      <Heading>검색</Heading>
-      <div style={{ marginTop: '-1rem' }}>
-        <SearchBar keyword={keyword} onChange={setKeyword} />
-      </div>
-      <Section>
-        <SectionTitle>🔥 실시간 인기</SectionTitle>
-        <PopularList>
-          {popular.map((item, i) => (
-            <li key={i}>
-              <span style={{ fontWeight: 600, marginRight: '0.75rem' }}>{i + 1}</span>
-              {item}
-            </li>
-          ))}
-        </PopularList>
-      </Section>
-
-      <Section>
-        <SectionTitle>⭐ 카테고리</SectionTitle>
-        <CategoryGrid>
-          {categories.map(({ label, icon }) => (
-            <CategoryButton key={label} onClick={() => handleCategoryClick(label)}>
-              <CategoryIcon src={icon} alt={label} />
-              <CategoryLabel>{label}</CategoryLabel>
-            </CategoryButton>
-          ))}
-        </CategoryGrid>
-      </Section>
-    </Container>
-  );
-};

@@ -1,16 +1,21 @@
 import { useState } from 'react';
 
+import { ArrowLeft } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
 import { SellForm } from '../features/register/SellForm';
 
 export const RegisterPage = () => {
   const [activeTab, setActiveTab] = useState('판매');
+  const navigate = useNavigate();
 
   return (
     <Container>
       <Header>
-        <BackButton>←</BackButton>
+        <BackButton onClick={() => navigate(-1)}>
+          <ArrowLeft size={20} />
+        </BackButton>
         <Title>등록하기</Title>
       </Header>
 

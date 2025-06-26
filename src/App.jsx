@@ -1,6 +1,8 @@
 import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
 
+import { ChatDetail } from './features/chat/ChatDetail';
 import { SearchResultPage } from './features/search/SearchResultPage';
+import { TalentSell } from './features/search/TalentSell';
 import { LayoutWithNav } from './layouts/WithNav';
 import { LayoutWithoutNav } from './layouts/WithoutNav';
 import { ChatPage } from './pages/ChatPage';
@@ -25,6 +27,8 @@ export const App = () => {
         {/* Nav가 없는 페이지들 */}
         <Route element={<LayoutWithoutNav />}>
           <Route path="/register" element={<RegisterPage />} />
+          <Route path="/talent/:id" element={<TalentSell />} />
+          <Route path="/chat/:id" element={<ChatDetail />} />
         </Route>
       </Routes>
     </Router>

@@ -1,18 +1,73 @@
+import { useState } from 'react';
+
 import { Image } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
 export const SellForm = () => {
+  const [tagInput, setTagInput] = useState('');
+  const [tags, setTags] = useState([]);
+  const [meetingType, setMeetingType] = useState('대면');
+  const [duration, setDuration] = useState('30분 이내');
+
+  const navigate = useNavigate();
+  const handleTagInputChange = e => {
+    setTagInput(e.target.value);
+  };
+
+  const handleTagInputKeyDown = e => {
+    if (['Enter', ' ', ','].includes(e.key)) {
+      e.preventDefault();
+      const trimmed = tagInput.trim();
+      if (trimmed && !tags.includes(trimmed)) {
+        setTags([...tags, trimmed]);
+      }
+      setTagInput('');
+    }
+  };
+
+  const handleRemoveTag = tagToRemove => {
+    setTags(tags.filter(tag => tag !== tagToRemove));
+  };
+
+  const handleSubmit = () => {
+    const newTalent = {
+      title: '1만 원으로 인생 프로필 만들기',
+      username: '이재훈',
+      rating: 0,
+      reviewCount: 0,
+      categories: ['그림', '취미'],
+      imageUrl: '',
+    };
+    navigate('/search/result?category=그림/서예', { state: { newTalent } });
+  };
+
   return (
     <Form>
       <ImagePlaceholder>
         <Image size={32} color="#9ca3af" />
       </ImagePlaceholder>
+
       <Input placeholder="제목을 입력하세요" />
-      <TagList>
-        <Tag>#그림</Tag>
-        <Tag>#취미</Tag>
-        <Tag>#캐리커처</Tag>
-      </TagList>
+
+      <TagInputWrapper>
+        <span>태그</span>
+        <TagInput
+          type="text"
+          placeholder="태그를 입력하세요"
+          value={tagInput}
+          onChange={handleTagInputChange}
+          onKeyDown={handleTagInputKeyDown}
+        />
+        <TagList>
+          {tags.map((tag, idx) => (
+            <Tag key={idx} onClick={() => handleRemoveTag(tag)}>
+              #{tag} ✕
+            </Tag>
+          ))}
+        </TagList>
+      </TagInputWrapper>
+
       <PriceInput>
         <span>가격</span>
         <input type="number" placeholder="가격을 입력하세요" />
@@ -23,19 +78,27 @@ export const SellForm = () => {
       <SectionTitle>안내 사항</SectionTitle>
       <Label>이 서비스는</Label>
       <OptionGroup>
-        <Option>대면</Option>
-        <Option active>비대면</Option>
-        <Option>둘 다</Option>
+        {['대면', '비대면', '둘 다'].map(option => (
+          <Option
+            key={option}
+            active={meetingType === option}
+            onClick={() => setMeetingType(option)}
+          >
+            {option}
+          </Option>
+        ))}
       </OptionGroup>
 
       <Label>서비스 소요 시간</Label>
       <OptionGroup>
-        <Option>30분 이내</Option>
-        <Option active>1시간 이내</Option>
-        <Option>3시간 이내</Option>
-        <Option>반나절 이내</Option>
-        <Option>1일 이상</Option>
+        {['30분 이내', '1시간 이내', '3시간 이내', '반나절 이내', '1일 이상'].map(time => (
+          <Option key={time} active={duration === time} onClick={() => setDuration(time)}>
+            {time}
+          </Option>
+        ))}
       </OptionGroup>
+
+      <SubmitButton onClick={handleSubmit}>제출</SubmitButton>
     </Form>
   );
 };
@@ -70,8 +133,22 @@ const Textarea = styled.textarea`
   height: 100px;
 `;
 
+const TagInputWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+`;
+
+const TagInput = styled.input`
+  padding: 0.5rem;
+  border: 1px solid #e5e7eb;
+  border-radius: 0.5rem;
+  font-size: 0.875rem;
+`;
+
 const TagList = styled.div`
   display: flex;
+  flex-wrap: wrap;
   gap: 0.5rem;
 `;
 
@@ -80,6 +157,7 @@ const Tag = styled.span`
   padding: 0.25rem 0.5rem;
   border-radius: 9999px;
   font-size: 0.75rem;
+  cursor: pointer;
 `;
 
 const PriceInput = styled.div`
@@ -118,4 +196,15 @@ const Option = styled.button`
   color: ${props => (props.active ? '#4338ca' : '#374151')};
   font-size: 0.875rem;
   border: none;
+`;
+
+const SubmitButton = styled.button`
+  margin-top: 1rem;
+  padding: 0.75rem;
+  border-radius: 0.5rem;
+  background-color: #2563eb;
+  color: white;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
 `;
