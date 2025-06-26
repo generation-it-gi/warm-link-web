@@ -1,40 +1,117 @@
 import { Image, Star } from 'lucide-react';
+import styled from 'styled-components';
+
+const Card = styled.div`
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  padding: 0.5rem;
+  background-color: #f7f7f7;
+  border-radius: 0.5rem;
+`;
+
+const ThumbnailWrapper = styled.div`
+  width: 4rem;
+  height: 4rem;
+  background-color: #e5e7eb;
+  border-radius: 0.375rem;
+  overflow: hidden;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
+const ThumbnailImage = styled.img`
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+`;
+
+const Content = styled.div`
+  flex: 1;
+`;
+
+const Title = styled.h4`
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #111827;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+`;
+
+const Username = styled.p`
+  font-size: 0.75rem;
+  color: #6b7280;
+`;
+
+const CategoryWrapper = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem;
+  margin-top: 0.25rem;
+`;
+
+const Category = styled.span`
+  font-size: 10px;
+  padding: 2px 8px;
+  background-color: #f3f4f6;
+  color: #4b5563;
+  border-radius: 9999px;
+`;
+
+const RatingWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  font-size: 0.75rem;
+  color: #6b7280;
+  margin-top: 0.25rem;
+`;
+
+const RatingText = styled.span`
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #374151;
+`;
+
+const ReviewCount = styled.span`
+  font-size: 0.75rem;
+  color: #9ca3af;
+`;
 
 export const TalentCard = ({ imageUrl = '', title, username, rating, reviewCount, categories }) => {
   return (
-    <div className="flex items-start gap-3 px-4 py-3 bg-white rounded-lg shadow-sm">
-      <div className="w-16 h-16 bg-gray-200 rounded overflow-hidden flex-shrink-0 flex items-center justify-center">
+    <Card>
+      <ThumbnailWrapper>
         {imageUrl ? (
-          <img src={imageUrl} alt={title} className="w-full h-full object-cover" />
+          <ThumbnailImage src={imageUrl} alt={title} />
         ) : (
-          <Image className="w-5 h-5 text-gray-400" />
+          <Image size={20} color="#9ca3af" />
         )}
-      </div>
+      </ThumbnailWrapper>
 
-      <div className="flex-1">
-        <h4 className="text-sm font-semibold text-gray-900 line-clamp-1">{title}</h4>
-        <p className="text-xs text-gray-500">{username}</p>
+      <Content>
+        <Title>{title}</Title>
+        <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+          <Username>{username}</Username>
 
-        {categories && categories.length > 0 && (
-          <div className="flex flex-wrap gap-1 mt-1">
-            {categories.map((cat, idx) => (
-              <span
-                key={idx}
-                className="text-[10px] px-2 py-[2px] bg-gray-100 rounded-full text-gray-600"
-              >
-                {cat}
-              </span>
-            ))}
-          </div>
-        )}
-
-        <div className="flex items-center text-xs text-gray-500 mt-1">
-          <Star className="w-4 h-4 text-yellow-400 fill-yellow-400 mr-1" />
-          <span className="text-sm font-medium text-gray-700">
-            {rating.toFixed(1)} <span className="text-xs text-gray-400">({reviewCount})</span>
-          </span>
+          {categories && categories.length > 0 && (
+            <CategoryWrapper>
+              {categories.map((cat, idx) => (
+                <Category key={idx}>{cat}</Category>
+              ))}
+            </CategoryWrapper>
+          )}
         </div>
-      </div>
-    </div>
+
+        <RatingWrapper>
+          <Star size={16} color="#facc15" fill="#facc15" style={{ marginRight: '4px' }} />
+          <RatingText>
+            {rating.toFixed(1)} <ReviewCount>({reviewCount})</ReviewCount>
+          </RatingText>
+        </RatingWrapper>
+      </Content>
+    </Card>
   );
 };

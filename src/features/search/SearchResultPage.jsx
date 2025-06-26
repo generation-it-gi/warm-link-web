@@ -1,7 +1,7 @@
-// src/pages/SearchResultPage.tsx
 import { useState } from 'react';
 
 import { useSearchParams } from 'react-router-dom';
+import styled from 'styled-components';
 
 import { SearchBar } from './SearchBar';
 import { TalentCard } from '../../shared/ui/TalentCard';
@@ -13,7 +13,7 @@ const dummyResults = [
     rating: 3.7,
     reviewCount: 148,
     categories: ['그림', '취미', '캐리커쳐'],
-    imageUrl: '/images/talent1.png',
+    imageUrl: '/images/image1.png',
   },
   {
     title: '목탄으로 사진 그립니다',
@@ -28,7 +28,7 @@ const dummyResults = [
     rating: 4.3,
     reviewCount: 17,
     categories: ['그림', '취미'],
-    imageUrl: '/images/talent2.png',
+    imageUrl: '/images/image2.png',
   },
   {
     title: '식물이랑 풍경 그려드려요',
@@ -43,9 +43,37 @@ const dummyResults = [
     rating: 4.7,
     reviewCount: 38,
     categories: ['그림'],
-    imageUrl: '/images/talent3.png',
+    imageUrl: '/images/image3.png',
   },
 ];
+
+const Container = styled.div`
+  padding: 1rem;
+`;
+const Title = styled.h1`
+  font-size: 1.125rem;
+  font-weight: bold;
+`;
+const TabMenu = styled.div`
+  display: flex;
+  margin-top: 0.5rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #4b5563;
+`;
+const TabButton = styled.button`
+  color: ${({ active }) => (active ? '#3467D5' : '#4b5563')};
+  border: 1px solid ${({ active }) => (active ? '#CCD9F5' : 'transparent')};
+  padding: 0.2rem;
+  border-radius: 1rem;
+  min-width: 4rem;
+`;
+const ResultList = styled.div`
+  margin-top: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+`;
 
 export const SearchResultPage = () => {
   const [searchParams] = useSearchParams();
@@ -55,31 +83,25 @@ export const SearchResultPage = () => {
   const tabs = ['거래순', '리뷰순', '별점순'];
 
   return (
-    <div className="pb-6">
-      <h1 className="text-lg font-bold px-4 pt-4">검색</h1>
-      <SearchBar keyword={keyword} onChange={setKeyword} />
-
-      {/* 탭 메뉴 */}
-      <div className="flex space-x-4 px-4 mt-2 text-sm font-medium text-gray-600">
-        {tabs.map(tab => (
-          <button
-            key={tab}
-            onClick={() => setActiveTab(tab)}
-            className={`px-1 pb-1 border-b-2 ${
-              activeTab === tab ? 'border-blue-600 text-blue-600' : 'border-transparent'
-            }`}
-          >
-            {tab}
-          </button>
-        ))}
+    <Container>
+      <Title>검색</Title>
+      <div style={{ margin: '0.75rem 0 0.5rem' }}>
+        <SearchBar keyword={keyword} onChange={setKeyword} />
       </div>
 
-      {/* 검색 결과 리스트 */}
-      <div className="mt-2 space-y-3">
+      <TabMenu>
+        {tabs.map(tab => (
+          <TabButton key={tab} onClick={() => setActiveTab(tab)} active={activeTab === tab}>
+            {tab}
+          </TabButton>
+        ))}
+      </TabMenu>
+
+      <ResultList>
         {dummyResults.map((item, idx) => (
           <TalentCard key={idx} {...item} />
         ))}
-      </div>
-    </div>
+      </ResultList>
+    </Container>
   );
 };
