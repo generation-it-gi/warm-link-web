@@ -6,6 +6,7 @@ import { MobileFirstContainer } from '../shared/ui/MobileFirstContainer';
 
 const Main = styled.main`
   flex-grow: 1;
+  padding-bottom: 5.5rem; /* NavBar 높이만큼 추가 */
 `;
 
 export const LayoutWithNav = () => {

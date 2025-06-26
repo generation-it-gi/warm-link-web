@@ -3,12 +3,18 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
 const Nav = styled.nav`
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  max-width: 600px; /* 모바일 기준 */
   height: 4rem; /* h-16 */
   border-top: 1px solid #e5e7eb; /* border-gray-200 */
   display: flex;
   justify-content: space-around;
   align-items: center;
   background-color: white;
+  z-index: 10;
 `;
 
 const NavButton = styled.button`

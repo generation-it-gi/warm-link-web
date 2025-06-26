@@ -4,6 +4,7 @@ const OuterWrapper = styled.div`
   display: flex;
   justify-content: center;
   width: 100%;
+  position: relative; /* 자식의 fixed 정렬에 대응 */
 `;
 
 const InnerWrapper = styled.div`
