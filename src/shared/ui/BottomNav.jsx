@@ -1,15 +1,31 @@
 import { Home, MessageCircle, Plus, Search, User } from 'lucide-react';
 import { useLocation, useNavigate } from 'react-router-dom';
+import styled from 'styled-components';
+
+const Nav = styled.nav`
+  height: 4rem; /* h-16 */
+  border-top: 1px solid #e5e7eb; /* border-gray-200 */
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  background-color: white;
+`;
+
+const NavButton = styled.button`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: 0.875rem; /* text-sm */
+  min-width: 2.75rem; /* min-w-11 */
+  color: ${({ active }) => (active ? '#2563eb' : '#374151')}; /* blue-600 / gray-700 */
+`;
 
 const NavItem = ({ icon, label, onClick, active }) => {
-  const baseStyle = 'flex flex-col items-center text-sm min-w-11';
-  const colorStyle = active ? 'text-blue-600' : 'text-gray-700';
-
   return (
-    <button onClick={onClick} className={`${baseStyle} ${colorStyle}`}>
+    <NavButton onClick={onClick} active={active}>
       {icon}
       <span>{label}</span>
-    </button>
+    </NavButton>
   );
 };
 
@@ -18,7 +34,7 @@ export const BottomNav = () => {
   const { pathname } = useLocation();
 
   return (
-    <nav className="h-16 border-t border-gray-200 flex justify-around items-center bg-white">
+    <Nav>
       <NavItem
         icon={<Home size={24} />}
         label="홈"
@@ -49,6 +65,6 @@ export const BottomNav = () => {
         onClick={() => navigate('/my')}
         active={pathname.startsWith('/my')}
       />
-    </nav>
+    </Nav>
   );
 };

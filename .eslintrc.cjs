@@ -55,6 +55,7 @@ module.exports = {
         'newlines-between': 'always', // 그룹 간 한 줄 띄움
       },
     ],
+    'import/no-named-as-default': 'off',
   },
   overrides: [
     {

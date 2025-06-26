@@ -1,14 +1,19 @@
 import { Outlet } from 'react-router-dom';
+import styled from 'styled-components';
 
 import { BottomNav } from '../shared/ui/BottomNav';
 import { MobileFirstContainer } from '../shared/ui/MobileFirstContainer';
 
+const Main = styled.main`
+  flex-grow: 1;
+`;
+
 export const LayoutWithNav = () => {
   return (
     <MobileFirstContainer hasNav>
-      <main className="flex-grow">
+      <Main>
         <Outlet />
-      </main>
+      </Main>
       <BottomNav />
     </MobileFirstContainer>
   );
