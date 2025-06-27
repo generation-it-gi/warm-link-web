@@ -30,7 +30,7 @@ export const ChatDetail = () => {
         ...prev,
         { from: 'other', type: 'text', content: '이번 주 토요일에 그림 전달드릴게요!' },
       ]);
-    }, 1500);
+    }, 2000);
   };
 
   const handleSend = () => {
@@ -45,7 +45,7 @@ export const ChatDetail = () => {
           ...prev,
           { from: 'other', type: 'text', content: '네 선입금 주시고 사진 보내주세요~' },
         ]);
-      }, 1000);
+      }, 2000);
     }
   };
 

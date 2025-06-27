@@ -32,7 +32,7 @@ export const SellForm = () => {
 
   const handleSubmit = () => {
     const newTalent = {
-      title: '1만 원으로 인생 프로필 만들기',
+      title: '1만원으로 인생 프로필 만들기',
       username: '이재훈',
       rating: 0,
       reviewCount: 0,

@@ -8,7 +8,7 @@ const dummyTalent = {
   rating: 3.7,
   reviewCount: 148,
   categories: ['그림', '취미', '캐리커쳐'],
-  imageUrl: '/images/image1.png',
+  imageUrl: '/images/big-size.png',
   price: '3,000원',
   description:
     '안녕하세요 캐리커쳐 그리는 최영수입니다~\n장당 3000원 입니다.\n잊지 못할 추억을 남겨드립니다~\n\n그림은 택배에 입금하면 직접 보내줘요~\n방문 수령 해도 됩니다.',
